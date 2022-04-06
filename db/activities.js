@@ -56,7 +56,6 @@ async function updateActivity({ id, ...fields }) {
   if (setString.length === 0) {
     return;
   }
-  console.log(setString);
   try {
     const {
       rows: [activities],

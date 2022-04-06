@@ -24,6 +24,8 @@ async function getAllRoutines() {
     const { rows: routines } = await client.query(`
         SELECT *
         FROM routines
+        JOIN users 
+         username AS "creatorName"
       `);
     return attachActivitiesToRoutines(routines);
   } catch (error) {
@@ -57,10 +59,29 @@ async function getAllRoutinesByUser({ username }) {
  }
 
  async function getRoutineById(id){
-
+  try{
+    const { rows: routines } = await client.query(`
+    SELECT *
+    FROM routines
+    WHERE id=${id} 
+  `);
+  return routines;
+  } catch(error) {
+      throw error;
+  }
  }
 
-async function getRoutinesWithoutActivities() {}
+async function getRoutinesWithoutActivities(){
+  try {
+    const { rows: routines } = await client.query(`
+        SELECT *
+        FROM routines
+      `);
+    return routines;
+  } catch (error) {
+    throw error;
+  }
+}
 
  async function getPublicRoutinesByActivity({ id }){
 
