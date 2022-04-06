@@ -1,4 +1,5 @@
 const client = require("./client");
+const { attachActivitiesToRoutines } = require("./activities");
 
 async function createRoutine({ creatorId, isPublic, name, goal }) {
   try {
@@ -20,9 +21,7 @@ async function createRoutine({ creatorId, isPublic, name, goal }) {
 
 async function getAllRoutines() {
   try {
-    const {
-      rows: [routines],
-    } = await client.query(`
+    const { rows: routines } = await client.query(`
         SELECT *
         FROM routines
       `);
@@ -32,13 +31,22 @@ async function getAllRoutines() {
   }
 }
 
-// async function getAllRoutinesByUser({ username })
+async function getAllRoutinesByUser({ username }) {
+  try {
+    const { rows: routines } = await client.query(`
+        SELECT username 
+        FROM routines
+        `);
+  } catch (error) {
+    throw error;
+  }
+}
 
 // async function getAllPublicRoutines()
 
 // async function getRoutineById(id)
 
-// async function getRoutinesWithoutActivities()
+async function getRoutinesWithoutActivities() {}
 
 // async function getPublicRoutinesByActivity({ id })
 
@@ -50,4 +58,5 @@ async function getAllRoutines() {
 
 module.exports = {
   createRoutine,
+  getRoutinesWithoutActivities,
 };

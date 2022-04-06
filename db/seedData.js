@@ -8,15 +8,15 @@ const {
   getActivityById,
   updateActivity,
 } = require("./activities");
-const { createRoutine } = require("./routines");
+const { createRoutine, getRoutinesWithoutActivities } = require("./routines");
 
 async function dropTables() {
   console.log("Dropping All Tables...");
   // drop all tables, in the correct order
   await client.query(`
   DROP TABLE IF EXISTS routine_activities;
-  DROP TABLE IF EXISTS activities;
   DROP TABLE IF EXISTS routines;
+  DROP TABLE IF EXISTS activities;
   DROP TABLE IF EXISTS users;
 
    `);
@@ -240,7 +240,7 @@ async function rebuildDB() {
     await createInitialUsers();
     await createInitialActivities();
     await createInitialRoutines();
-    await createInitialRoutineActivities();
+    // await createInitialRoutineActivities();
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
