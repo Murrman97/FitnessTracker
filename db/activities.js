@@ -76,6 +76,8 @@ async function updateActivity(id, fields = {}) {
   }
 }
 
+
+
 module.exports = {
   createActivity,
   getAllActivities,
