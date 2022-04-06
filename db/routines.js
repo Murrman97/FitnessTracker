@@ -25,7 +25,7 @@ async function getAllRoutines() {
         SELECT *
         FROM routines
       `);
-    return routines;
+    return attachActivitiesToRoutines(routines);
   } catch (error) {
     throw error;
   }
@@ -37,26 +37,65 @@ async function getAllRoutinesByUser({ username }) {
         SELECT username 
         FROM routines
         `);
+        return attachActivitiesToRoutines(routines)
   } catch (error) {
     throw error;
   }
 }
 
-// async function getAllPublicRoutines()
+ async function getAllPublicRoutines(){
+  try {
+    const { rows: routines } = await client.query(`
+        SELECT *
+        FROM routines
+        WHERE "isPublic" = true 
+      `);
+    return attachActivitiesToRoutines(routines);
+  } catch (error) {
+    throw error;
+  }
+ }
 
-// async function getRoutineById(id)
+ async function getRoutineById(id){
+
+ }
 
 async function getRoutinesWithoutActivities() {}
 
-// async function getPublicRoutinesByActivity({ id })
+ async function getPublicRoutinesByActivity({ id }){
 
-// async function getPublicRoutinesByUser({ username })
+ }
 
-// async function updateRoutine({ id, isPublic, name, goal })
+ async function getPublicRoutinesByUser({ username }){
+  try {
+    const { rows: routines } = await client.query(`
+        SELECT *
+        FROM routines
+        WHERE "isPublic" = true 
+      `);
+    return attachActivitiesToRoutines(routines);
+  } catch (error) {
+    throw error;
+  }
+ }
 
-// async function destroyRoutine(id)
+ async function updateRoutine({ id, isPublic, name, goal }){
+
+ }
+
+ async function destroyRoutine(id){
+
+ }
 
 module.exports = {
   createRoutine,
   getRoutinesWithoutActivities,
+  getAllRoutines,
+  getAllRoutinesByUser,
+  getAllPublicRoutines,
+  getPublicRoutinesByUser,
+  getPublicRoutinesByActivity,
+  getRoutineById,
+  updateRoutine,
+  destroyRoutine
 };

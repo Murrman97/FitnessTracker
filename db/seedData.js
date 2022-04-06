@@ -8,7 +8,7 @@ const {
   getActivityById,
   updateActivity,
 } = require("./activities");
-const { createRoutine, getRoutinesWithoutActivities } = require("./routines");
+const { createRoutine, getRoutinesWithoutActivities, getAllRoutines } = require("./routines");
 
 async function dropTables() {
   console.log("Dropping All Tables...");
