@@ -90,6 +90,7 @@ describe("Database", () => {
     describe("getUserById", () => {
       it("Gets a user based on the user Id", async () => {
         const user = await getUserById(userToCreateAndUpdate.id);
+
         expect(user).toBeTruthy();
         expect(user.id).toBe(userToCreateAndUpdate.id);
       });
@@ -206,7 +207,7 @@ describe("Database", () => {
         );
       });
     });
-    xdescribe("getAllRoutinesByUser", () => {
+    describe("getAllRoutinesByUser", () => {
       let routine, user;
       beforeAll(async () => {
         user = await getUserById(1);
@@ -225,14 +226,14 @@ describe("Database", () => {
         );
         expect(routine.creatorId).toBe(user.id);
       });
-      xit("includes username, from users join, aliased as creatorName", async () => {
+      it("includes username, from users join, aliased as creatorName", async () => {
         expect(routine).toEqual(
           expect.objectContaining({
             creatorName: expect.any(String),
           })
         );
       });
-      xit("includes duration and count on activities, from routine_activities join", async () => {
+      it("includes duration and count on activities, from routine_activities join", async () => {
         const {
           activities: [firstActivity],
         } = routine;
@@ -244,7 +245,7 @@ describe("Database", () => {
         );
       });
     });
-    xdescribe("getPublicRoutinesByUser", () => {
+    describe("getPublicRoutinesByUser", () => {
       let routine, user;
       beforeAll(async () => {
         user = await getUserById(1);
@@ -264,14 +265,14 @@ describe("Database", () => {
         expect(routine.creatorId).toBe(user.id);
         expect(routine.isPublic).toBe(true);
       });
-      xit("includes username, from users join, aliased as creatorName", async () => {
+      it("includes username, from users join, aliased as creatorName", async () => {
         expect(routine).toEqual(
           expect.objectContaining({
             creatorName: expect.any(String),
           })
         );
       });
-      xit("includes duration and count on activities, from routine_activities join", async () => {
+      it("includes duration and count on activities, from routine_activities join", async () => {
         const {
           activities: [firstActivity],
         } = routine;

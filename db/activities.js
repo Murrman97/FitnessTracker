@@ -40,7 +40,7 @@ async function getActivityById(id) {
         SELECT *
         FROM activities
         WHERE id=${id}
-        `,
+        `
     );
     return activities;
   } catch (error) {
@@ -103,7 +103,7 @@ async function attachActivitiesToRoutines(routines) {
       // attach the activities to each single routine
       routine.activities = activitiesToAdd;
     }
-    console.log(routinesToReturn, "From attachTo function")
+   
     return routinesToReturn;
   } catch (error) {
     throw error;
