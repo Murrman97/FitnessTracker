@@ -30,15 +30,46 @@ async function getRoutineActivitiesByRoutine({ id }) {
         SELECT * 
         FROM routine_activities
         WHERE "routineId" = $1
-        `,[id]
+        `,
+    [id]
   );
-  console.log(rows, "ROWS!!!!!!!!")
+
   return rows;
 }
 
-async function updateRoutineActivity({ id, count, duration }) {}
+async function updateRoutineActivity({ id, ...fields }) {
+  const setString = Object.keys(fields)
+    .map((key, index) => `"${key}"=$${index + 1}`)
+    .join(", ");
 
-async function destroyRoutineActivity(id) {}
+  // return early if this is called without fields
+  if (setString.length === 0) {
+    return;
+  }
+  const {
+    rows: [routineActivities],
+  } = await client.query(
+    `
+      UPDATE routine_activities
+      SET ${setString}
+      WHERE id=${id}
+      RETURNING *;
+    `,
+    Object.values(fields)
+  );
+  return routineActivities;
+}
+
+async function destroyRoutineActivity(id) {
+  await client.query(
+    `
+        DELETE FROM routine_activities
+        WHERE id = $1
+        
+      `,
+    [id]
+  );
+}
 
 module.exports = {
   addActivityById,

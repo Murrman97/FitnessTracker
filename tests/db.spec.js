@@ -388,12 +388,12 @@ describe("Database", () => {
       it("Deletes all the routine_activities whose routine is the one being deleted.", async () => {
         const queriedRoutineActivities = await getRoutineActivitiesByRoutine(
           routineToCreateAndUpdate
-          );
-          expect(queriedRoutineActivities.length).toBe(0);
+        );
+        expect(queriedRoutineActivities.length).toBe(0);
       });
     });
   });
-  xdescribe("Routine Activities", () => {
+  describe("Routine Activities", () => {
     const routineActivityData = {
       routineId: 4,
       activityId: 8,
@@ -401,7 +401,7 @@ describe("Database", () => {
       duration: 10000,
     };
     let routineActivityToCreateAndUpdate;
-    xdescribe("addActivityToRoutine({ routineId, activityId, count, duration })", () => {
+    describe("addActivityToRoutine({ routineId, activityId, count, duration })", () => {
       it("creates a new routine_activity, and return it", async () => {
         routineActivityToCreateAndUpdate = await addActivityToRoutine(
           routineActivityData
@@ -421,7 +421,7 @@ describe("Database", () => {
         );
       });
     });
-    xdescribe("updateRoutineActivity({ id, count, duration })", () => {
+    describe("updateRoutineActivity({ id, count, duration })", () => {
       it("Finds the routine with id equal to the passed in id. Updates the count or duration as necessary.", async () => {
         const newRoutineActivityData = {
           id: routineActivityToCreateAndUpdate.id,
@@ -442,11 +442,12 @@ describe("Database", () => {
         );
       });
     });
-    xdescribe("destroyRoutineActivity(id)", () => {
+    describe("destroyRoutineActivity(id)", () => {
       it("remove routine_activity from database", async () => {
         const deletedRoutine = await destroyRoutineActivity(
           routineActivityToCreateAndUpdate.id
         );
+        console.log(routineActivityToCreateAndUpdate.id, "!!!!!!");
         expect(deletedRoutine.id).toBe(routineActivityToCreateAndUpdate.id);
         const { rows } = await client.query(`
           SELECT * FROM routine_activities
