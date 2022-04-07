@@ -194,7 +194,7 @@ describe("Database", () => {
           })
         );
       });
-      xit("includes duration and count on activities, from routine_activities join", async () => {
+      it("includes duration and count on activities, from routine_activities join", async () => {
         const {
           activities: [firstActivity],
         } = routine;
