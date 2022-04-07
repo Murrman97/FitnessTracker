@@ -444,10 +444,11 @@ describe("Database", () => {
     });
     describe("destroyRoutineActivity(id)", () => {
       it("remove routine_activity from database", async () => {
+        console.log(routineActivityToCreateAndUpdate.id);
         const deletedRoutine = await destroyRoutineActivity(
           routineActivityToCreateAndUpdate.id
         );
-        console.log(routineActivityToCreateAndUpdate.id, "!!!!!!");
+
         expect(deletedRoutine.id).toBe(routineActivityToCreateAndUpdate.id);
         const { rows } = await client.query(`
           SELECT * FROM routine_activities

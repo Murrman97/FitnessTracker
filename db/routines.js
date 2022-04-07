@@ -74,11 +74,14 @@ async function getRoutineById(id) {
   try {
     const {
       rows: [routines],
-    } = await client.query(`
+    } = await client.query(
+      `
     SELECT *
     FROM routines
-    WHERE id=${id} 
-  `);
+    WHERE id= $1
+  `,
+      [id]
+    );
     return routines;
   } catch (error) {
     throw error;
@@ -152,20 +155,19 @@ async function updateRoutine({ id, ...fields }) {
 
 async function destroyRoutine(id) {
   await client.query(
-  `
+    `
   DELETE FROM routine_activities
   WHERE routine_activities."routineId" = $1
 `,
-  [id]
-);
- await client.query(
+    [id]
+  );
+  await client.query(
     `
     DELETE FROM routines
     WHERE id = $1
   `,
     [id]
   );
-  
 }
 
 module.exports = {
