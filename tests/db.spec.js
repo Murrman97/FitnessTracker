@@ -157,7 +157,7 @@ describe("Database", () => {
           })
         );
       });
-      xit("includes duration and count on activities, from routine_activities join", async () => {
+      it("includes duration and count on activities, from routine_activities join", async () => {
         const {
           activities: [firstActivity],
         } = routine;
@@ -187,7 +187,7 @@ describe("Database", () => {
         );
         expect(routine.isPublic).toBe(true);
       });
-      xit("includes username, from users join, aliased as creatorName", async () => {
+      it("includes username, from users join, aliased as creatorName", async () => {
         expect(routine).toEqual(
           expect.objectContaining({
             creatorName: expect.any(String),
@@ -321,7 +321,7 @@ describe("Database", () => {
         );
       });
     });
-    describe("createRoutine", () => {
+    xdescribe("createRoutine", () => {
       it("creates and returns the new routine", async () => {
         routineToCreateAndUpdate = await createRoutine({
           creatorId: 2,

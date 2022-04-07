@@ -21,13 +21,17 @@ async function createRoutine({ creatorId, isPublic, name, goal }) {
 
 async function getAllRoutines() {
   try {
+   
     const { rows: routines } = await client.query(`
-        SELECT *
+        SELECT routines.* , users.username AS "creatorName"
         FROM routines
         JOIN users 
-         username AS "creatorName"
+        ON routines."creatorId" = users.id
       `);
-    return attachActivitiesToRoutines(routines);
+      const rA = await attachActivitiesToRoutines(routines)
+      const rA1 = rA[0].activities
+      console.log(rA1,"Routines !!!!!")
+    return await attachActivitiesToRoutines(routines);
   } catch (error) {
     throw error;
   }
@@ -48,8 +52,10 @@ async function getAllRoutinesByUser({ username }) {
  async function getAllPublicRoutines(){
   try {
     const { rows: routines } = await client.query(`
-        SELECT *
+        SELECT routines.* , users.username AS "creatorName"
         FROM routines
+        JOIN users 
+        ON routines."creatorId" = users.id
         WHERE "isPublic" = true 
       `);
     return attachActivitiesToRoutines(routines);
