@@ -1,24 +1,24 @@
-const client  = require('./client')
-
-
-
+const { rows } = require("pg/lib/defaults");
+const client = require("./client");
 
 async function createUser({ username, password }) {
-    try {
-        const {
-            rows: [user]
-        } = await client.query(`
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
         INSERT INTO users(username, password)
         VALUES ($1, $2)
         ON CONFLICT (username) DO NOTHING
-        RETURNING *;
+        RETURNING *
         `,
-            [username, password]
-        );
-        return user;
-    } catch (error) {
-        throw error;
-    }
+      [username, password]
+    );
+    delete user.password;
+    return user;
+  } catch (error) {
+    throw error;
+  }
 }
 
 // async function getUser({ username, password }) {
@@ -30,31 +30,47 @@ async function createUser({ username, password }) {
 // }
 
 async function getUserById(id) {
-    try {
-        const { rows } = await client.query(`
-        SELECT username, id FROM users
-        `);
-        return rows;
-    } catch (error) {
-        throw error;
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+        SELECT * FROM users
+        WHERE id=$1
+        `,
+      [id]
+    );
+    if (!user) {
+      return null;
     }
+
+    return user;
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function getUserByUsername(username) {
-    try {
-        const { rows } = await client.query(`
-        SELECT username FROM users
-        `)
-        return rows;
-    } catch (error) {
-        throw error;
+  try {
+    const { rows } = await client.query(
+      `
+        SELECT * FROM users
+        WHERE username = $1
+        `,
+      [username]
+    );
+    if (!rows.length || !rows) {
+      return null;
     }
+
+    return rows[0];
+  } catch (error) {
+    throw error;
+  }
 }
 
-
-
 module.exports = {
-    createUser,
-    getUserById,
-    getUserByUsername
-  };
+  createUser,
+  getUserById,
+  getUserByUsername,
+};
