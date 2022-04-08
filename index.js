@@ -1,11 +1,14 @@
 // create the express server here
 const express = require("express");
-const server = express();
+const cors = require("cors");
+const app = express();
 
-server.use(express.json());
+app.use(cors());
 
-const PORT = 3000;
+app.get("/products/:id", function (req, res, next) {
+  res.json({ msg: "This is CORS-enabled for all origins!" });
+});
 
-server.listen(PORT, () => {
-  console.log("The server is up on port", PORT);
+app.listen(80, function () {
+  console.log("CORS-enabled web server listening on port 80");
 });
