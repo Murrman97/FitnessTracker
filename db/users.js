@@ -1,4 +1,3 @@
-const { rows } = require("pg/lib/defaults");
 const client = require("./client");
 
 async function createUser({ username, password }) {
@@ -59,10 +58,10 @@ async function getUserByUsername(username) {
         `,
       [username]
     );
-    if (!rows.length || !rows) {
+    if (!rows || !rows.length) {
       return null;
     }
-
+    console.log(rows, "ROWS!!!!")
     return rows[0];
   } catch (error) {
     throw error;

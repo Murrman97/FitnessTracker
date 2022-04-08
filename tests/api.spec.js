@@ -47,7 +47,7 @@ describe("API", () => {
   describe("Users", () => {
     let newUser = { username: "robert", password: "bobbylong321" };
     let newUserShortPassword = { username: "robertShort", password: "bobby21" };
-    xdescribe("POST /users/register", () => {
+    describe("POST /users/register", () => {
       let tooShortSuccess, tooShortResponse;
       beforeAll(async () => {
         const successResponse = await axios.post(
