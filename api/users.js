@@ -1,6 +1,6 @@
 const express = require("express");
 const usersRouter = express.Router();
-const { createUser, getUserByUsername } = require("../db")
+const { createUser, getUserByUsername, getUser } = require("../db")
 const jwt = require("jsonwebtoken");
 
 console.log( getUserByUsername)

@@ -20,13 +20,13 @@ async function createUser({ username, password }) {
   }
 }
 
-// async function getUser({ username, password }) {
-//     try {
-
-//     } catch (error) {
-//         throw error;
-//     }
-// }
+async function getUser({ username, password }) {
+    const {rows: [user]} = await client.query(`
+    SELECT * from users
+    `)
+    delete user.password
+    return user
+}
 
 async function getUserById(id) {
   try {
@@ -72,4 +72,5 @@ module.exports = {
   createUser,
   getUserById,
   getUserByUsername,
+  getUser
 };

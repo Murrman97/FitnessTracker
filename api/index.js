@@ -5,13 +5,9 @@ const express = require("express");
 const apiRouter = express.Router();
 const usersRouter = require("./users");
 
-
-apiRouter.get("/health", function (req, res, next) { 
-    res.send({message:"it is healthy"})});
-
-// apiRouter.get("/products/:id", function (req, res, next) {
-//     res.json({ msg: "This is CORS-enabled for all origins!" });
-//   });
+apiRouter.get("/health", function (req, res, next) {
+  res.send({ message: "it is healthy" });
+});
 
 apiRouter.use("/users", usersRouter);
 
