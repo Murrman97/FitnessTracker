@@ -2,6 +2,7 @@ const client = require("./client");
 
 async function createUser({ username, password }) {
   try {
+     console.log("IN YOUR CREATE USER ", username, password)
     const {
       rows: [user],
     } = await client.query(
@@ -14,6 +15,7 @@ async function createUser({ username, password }) {
       [username, password]
     );
     delete user.password;
+    console.log(user)
     return user;
   } catch (error) {
     throw error;

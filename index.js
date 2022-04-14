@@ -9,7 +9,7 @@ app.use(morgan('dev'));
 
 
 app.use(express.json());
-
+app.use(express.urlencoded({extended: true}))
 
 const apiRouter = require("./api");
 app.use("/api", apiRouter);
