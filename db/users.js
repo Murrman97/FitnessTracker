@@ -1,4 +1,3 @@
-const { rows } = require("pg/lib/defaults");
 const client = require("./client");
 
 async function createUser({ username, password }) {
@@ -21,13 +20,13 @@ async function createUser({ username, password }) {
   }
 }
 
-// async function getUser({ username, password }) {
-//     try {
-
-//     } catch (error) {
-//         throw error;
-//     }
-// }
+async function getUser({ username, password }) {
+    const {rows: [user]} = await client.query(`
+    SELECT * from users
+    `)
+    delete user.password
+    return user
+}
 
 async function getUserById(id) {
   try {
@@ -59,10 +58,10 @@ async function getUserByUsername(username) {
         `,
       [username]
     );
-    if (!rows.length || !rows) {
+    if (!rows || !rows.length) {
       return null;
     }
-
+    console.log(rows, "ROWS!!!!")
     return rows[0];
   } catch (error) {
     throw error;
@@ -73,4 +72,5 @@ module.exports = {
   createUser,
   getUserById,
   getUserByUsername,
+  getUser
 };
