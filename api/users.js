@@ -20,39 +20,40 @@ usersRouter.get("/", async (req, res) => {
 usersRouter.post("/register", async (req, res, next) => {
   // console.log("HELLOOOO WORLD ")
   const { username, password } = req.body;
-  // console.log(username, password, "Line8 Users !!!!!")
+  //  console.log(username, password, "Line8 Users !!!!!")
    try {
-     console.log(getUserByUsername(), "GETUSER !!!!");
      const getUserName = await getUserByUsername(username);
-     if (getUserName) {
-       console.log("THERE IS ALREADY A USER");
-       next({
-         name: "UserExistsError",
-         message: "A user by that username already exists",
+     console.log(getUserName(), "GETUSER !!!!");
+     if (!getUserName) {
+       const user = await createUser({
+         username,
+         password,
         });
-      }
-      const user = await createUser({
-        username,
-        password,
-      });
-    console.log("USER!!!!!", user);
-    const token = jwt.sign(
-      {
-        id: user.id,
-        username,
-      },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "1w",
-      }
-      );
-    res.send({
-      user,
-      message: "you're signed up!",
-      token,
-    });
-  } catch ({ name, message }) {
-    next({ name, message });
+        const token = jwt.sign(
+          {
+            id: user.id,
+            username,
+          },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: "1w",
+          }
+          );
+          console.log("USER!!!!!", user);
+          res.send({
+            user,
+            message: "you're signed up!",
+         token,
+       });
+      }else {
+         next({
+           name: "UserExistsError",
+           message: "A user by that username already exists",
+          });
+        }
+
+  } catch (error) {
+    next(error);
   }
 });
 
