@@ -50,21 +50,23 @@ async function getUserById(id) {
     throw error;
   }
 }
-
+// this function is the problem 
 async function getUserByUsername(username) {
   try {
-    const { rows } = await client.query(
+    const { rows: [user]} = await client.query(
       `
-        SELECT * FROM users
-        WHERE username = $1
-        `,
+      SELECT * FROM users
+      WHERE username = $1
+      `,
       [username]
-    );
+      );
+      console.log(rows, "rows!!!!!")
     if (!rows || !rows.length) {
       return null;
     }
-    console.log(rows, "ROWS!!!!")
-    return rows[0];
+    
+    console.log(user, "USERS!!!!")
+    return user;
   } catch (error) {
     throw error;
   }
