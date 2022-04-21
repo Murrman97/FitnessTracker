@@ -233,6 +233,15 @@ async function createInitialRoutineActivities() {
   }
 }
 
+async function testDb(){
+  try{
+    console.log("starting testDb")
+    const username = await getUserByUsername(2)
+    console.log("getUsername testing!!!!",username)
+  }catch(error){
+    throw error
+  }
+}
 async function rebuildDB() {
   try {
     client.connect();
@@ -242,6 +251,7 @@ async function rebuildDB() {
     await createInitialActivities();
     await createInitialRoutines();
     await createInitialRoutineActivities();
+    await testDb()
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;

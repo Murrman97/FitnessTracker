@@ -22,7 +22,7 @@ async function createUser({ username, password }) {
   }
 }
 
-async function getUser({ username, password }) {
+async function getUser() {
     const {rows: [user]} = await client.query(`
     SELECT * from users
     `)
@@ -52,24 +52,17 @@ async function getUserById(id) {
 }
 // this function is the problem 
 async function getUserByUsername(username) {
-  try {
-    const { rows: [user]} = await client.query(
+  console.log(username)
+    const { rows:[user] } = await client.query(
       `
       SELECT * FROM users
       WHERE username = $1
       `,
       [username]
       );
-      console.log(rows, "rows!!!!!")
-    if (!rows || !rows.length) {
-      return null;
-    }
     
     console.log(user, "USERS!!!!")
     return user;
-  } catch (error) {
-    throw error;
-  }
 }
 
 module.exports = {
