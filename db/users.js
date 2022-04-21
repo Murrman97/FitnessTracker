@@ -52,7 +52,7 @@ async function getUserById(id) {
 }
 // this function is the problem 
 async function getUserByUsername(username) {
-  console.log(username)
+
     const { rows:[user] } = await client.query(
       `
       SELECT * FROM users
@@ -61,7 +61,7 @@ async function getUserByUsername(username) {
       [username]
       );
     
-    console.log(user, "USERS!!!!")
+    console.log({user})
     return user;
 }
 

@@ -5,6 +5,8 @@ const morgan = require('morgan');
 const app = express();
 const {PORT = 3000} = process.env;
 
+const client = require('./db/client')
+client.connect()
 app.use(cors());
 app.use(morgan('dev'));
 

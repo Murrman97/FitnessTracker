@@ -20,10 +20,11 @@ usersRouter.get("/", async (req, res) => {
 usersRouter.post("/register", async (req, res, next) => {
   // console.log("HELLOOOO WORLD ")
   const { username, password } = req.body;
-  //  console.log(username, password, "Line8 Users !!!!!")
+ 
    try {
+     console.log('hi')
      const getUserName = await getUserByUsername(username);
-     console.log(getUserName(), "GETUSER !!!!");
+     console.log("getUserName". getUserName)
      if (!getUserName) {
        const user = await createUser({
          username,
@@ -69,6 +70,7 @@ usersRouter.post("/login", async (req, res, next) => {
   }
 
   try {
+    console.log(getUserByUsername())
     const user = await getUserByUsername(username);
 
     if (user && user.password == password) {
@@ -77,7 +79,8 @@ usersRouter.post("/login", async (req, res, next) => {
         { id: user.id, username: username },
         process.env.JWT_SECRET
       );
-      res.send({ message: "you're logged in!", token: token });
+      console.log(user)
+      res.send({ user,message: "you're logged in!", token: token });
     } else {
       next({
         name: "IncorrectCredentialsError",
