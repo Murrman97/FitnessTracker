@@ -5,6 +5,7 @@ const express = require("express");
 const apiRouter = express.Router();
 const usersRouter = require("./users");
 
+
 apiRouter.get("/health", function (req, res, next) {
   res.send({ message: "it is healthy" });
 });
