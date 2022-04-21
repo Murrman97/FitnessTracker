@@ -121,7 +121,7 @@ describe("API", () => {
       });
     });
     describe("GET /users/me", () => {
-      it("sends back users data if valid token is supplied in header", async () => {
+      xit("sends back users data if valid token is supplied in header", async () => {
         const { data } = await axios.get(`${API_URL}/api/users/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -139,7 +139,7 @@ describe("API", () => {
         expect(noTokenErrResp.data).toBeTruthy();
       });
     });
-    describe("GET /users/:username/routines", () => {
+    xdescribe("GET /users/:username/routines", () => {
       it("Gets a list of public routines for a particular user.", async () => {
         const userId = 2;
         const userWithRoutines = await getUserById(userId);
@@ -152,7 +152,7 @@ describe("API", () => {
       });
     });
   });
-  xdescribe("Activities", () => {
+  describe("Activities", () => {
     let activityToCreateAndUpdate = {
       name: "Bicep Curls",
       description: "They hurt, but you will thank you later",
@@ -175,7 +175,7 @@ describe("API", () => {
         expect(filteredActivity.description).toEqual(curls.description);
       });
     });
-    xdescribe("POST /activities (*)", () => {
+    describe("POST /activities (*)", () => {
       it("Creates a new activity", async () => {
         const { data: respondedActivity } = await axios.post(
           `${API_URL}/api/activities`,
