@@ -206,7 +206,7 @@ describe("API", () => {
         );
       });
     });
-    xdescribe("GET /activities/:activityId/routines", () => {
+    describe("GET /activities/:activityId/routines", () => {
       it("Get a list of all public routines which feature that activity", async () => {
         const [testRoutine] = await getAllPublicRoutines();
         const [testActivity] = testRoutine.activities;

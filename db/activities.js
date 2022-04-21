@@ -39,8 +39,8 @@ async function getActivityById(id) {
       `
         SELECT *
         FROM activities
-        WHERE id=${id}
-        `
+        WHERE id=$1
+        `, [id]
     );
     return activities;
   } catch (error) {
