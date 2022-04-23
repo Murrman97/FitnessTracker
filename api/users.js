@@ -1,6 +1,6 @@
 const express = require("express");
 const usersRouter = express.Router();
-const { createUser, getUserByUsername, getUser } = require("../db");
+const { createUser, getUserByUsername, getUser, getPublicRoutinesByUser } = require("../db");
 const jwt = require("jsonwebtoken");
 
 usersRouter.use((req, res, next) => {
@@ -22,9 +22,8 @@ usersRouter.post("/register", async (req, res, next) => {
   const { username, password } = req.body;
  
    try {
-     console.log('hi')
+    
      const getUserName = await getUserByUsername(username);
-     console.log("getUserName". getUserName)
      if (!getUserName) {
        const user = await createUser({
          username,
@@ -46,13 +45,18 @@ usersRouter.post("/register", async (req, res, next) => {
             message: "you're signed up!",
          token,
        });
-      }else {
-         next({
-           name: "UserExistsError",
-           message: "A user by that username already exists",
-          });
-        }
-
+      }else if (
+        next({
+          name:"password is too short",
+          message:"password is too short"
+        })
+      ){
+      }
+      next({
+        name: "UserExistsError",
+        message: "A user by that username already exists",
+       });
+      
   } catch (error) {
     next(error);
   }
@@ -79,7 +83,6 @@ usersRouter.post("/login", async (req, res, next) => {
         { id: user.id, username: username },
         process.env.JWT_SECRET
       );
-      console.log(user)
       res.send({ user,message: "you're logged in!", token: token });
     } else {
       next({
