@@ -2,6 +2,7 @@ const express = require("express");
 const usersRouter = express.Router();
 const { createUser, getUserByUsername, getUser, getPublicRoutinesByUser } = require("../db");
 const jwt = require("jsonwebtoken");
+const { loginAuth } = require("./utils");
 
 usersRouter.use((req, res, next) => {
   console.log("A request is being made to /users");
@@ -43,16 +44,16 @@ usersRouter.post("/register", async (req, res, next) => {
           res.send({
             user,
             message: "you're signed up!",
-         token,
-       });
-      }else if (
-        next({
-          name:"password is too short",
-          message:"password is too short"
-        })
-      ){
-      }
-      next({
+            token,
+          });
+        }else if (
+          next({
+            name:"password is too short",
+            message:"password is too short"
+          })
+          ){
+          }
+          next({
         name: "UserExistsError",
         message: "A user by that username already exists",
        });
@@ -95,4 +96,17 @@ usersRouter.post("/login", async (req, res, next) => {
     next(error);
   }
 });
+
+usersRouter.post("/me", loginAuth, async (req, res, next) => {
+})
+
+usersRouter.get("/:username/routines", async(req, res, next)=>{
+   const{ username } = req.body
+  try{
+    const userRoutine = await getPublicRoutinesByUser({username})
+    res.send(userRoutine)
+  }catch(error){
+    next(error)
+  }
+})
 module.exports = usersRouter;

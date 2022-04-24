@@ -100,7 +100,7 @@ describe("API", () => {
         expect(duplicateSuccess).toBeFalsy();
         expect(duplicateErrResp.data).toBeTruthy();
       });
-      it("Throws errors for password-too-short.", async () => {
+      xit("Throws errors for password-too-short.", async () => {
         expect(tooShortSuccess).toBeFalsy();
         expect(tooShortResponse.data).toBeTruthy();
       });
@@ -121,7 +121,7 @@ describe("API", () => {
       });
     });
     describe("GET /users/me", () => {
-      it("sends back users data if valid token is supplied in header", async () => {
+      xit("sends back users data if valid token is supplied in header", async () => {
         const { data } = await axios.get(`${API_URL}/api/users/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -244,7 +244,7 @@ describe("API", () => {
       });
     });
 
-    describe("POST /routines (*)", () => {
+    xdescribe("POST /routines (*)", () => {
       it("Creates a new routine, with the creatorId matching the logged in user", async () => {
         const { data: respondedRoutine } = await axios.post(
           `${API_URL}/api/routines`,
@@ -339,8 +339,8 @@ describe("API", () => {
       count: 25,
       duration: 200,
     };
-    xdescribe("PATCH /routine_activities/:routineActivityId (**)", () => {
-      it("Updates the count or duration on the routine activity", async () => {
+    describe("PATCH /routine_activities/:routineActivityId (**)", () => {
+      xit("Updates the count or duration on the routine activity", async () => {
         const { data: respondedRoutineActivity } = await axios.patch(
           `${API_URL}/api/routine_activities/${routineActivityToCreateAndUpdate.id}`,
           newRoutineActivityData,
@@ -369,8 +369,8 @@ describe("API", () => {
         expect(errRespondedRoutineActivity.data).toBeTruthy();
       });
     });
-    xdescribe("DELETE /routine_activities/:routineActivityId (**)", () => {
-      it("Removes an activity from a routine, uses hard delete", async () => {
+    describe("DELETE /routine_activities/:routineActivityId (**)", () => {
+      xit("Removes an activity from a routine, uses hard delete", async () => {
         const { data: deletedRoutineActivity } = await axios.delete(
           `${API_URL}/api/routine_activities/${routineActivityToCreateAndUpdate.id}`,
           { headers: { Authorization: `Bearer ${token}` } }

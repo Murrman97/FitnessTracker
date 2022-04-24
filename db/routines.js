@@ -5,7 +5,7 @@ const { getUserByUsername } = require("./users");
 async function createRoutine({ creatorId, isPublic, name, goal }) {
   try {
     const {
-      rows: [routine],
+      rows
     } = await client.query(
       `
           INSERT INTO routines("creatorId", "isPublic", name, goal) 
@@ -15,7 +15,7 @@ async function createRoutine({ creatorId, isPublic, name, goal }) {
       [creatorId, isPublic, name, goal]
     );
 
-    return routine;
+    return rows;
   } catch (error) {
     throw error;
   }
@@ -31,7 +31,7 @@ async function getAllRoutines() {
       `);
     const rA = await attachActivitiesToRoutines(routines);
     const rA1 = rA[0].activities;
-    //   console.log(rA1,"Routines !!!!!")
+      console.log(rA1,"Routines !!!!!")
     return await attachActivitiesToRoutines(routines);
   } catch (error) {
     throw error;
@@ -57,14 +57,14 @@ async function getAllRoutinesByUser({ username }) {
 
 async function getAllPublicRoutines() {
   try {
-    const { rows: routines } = await client.query(`
+    const{  rows: routines }= await client.query(`
         SELECT routines.* , users.username AS "creatorName"
         FROM routines
         JOIN users 
         ON routines."creatorId" = users.id
         WHERE "isPublic" = true 
       `);
-    return attachActivitiesToRoutines(routines);
+      return attachActivitiesToRoutines(routines);
   } catch (error) {
     throw error;
   }
