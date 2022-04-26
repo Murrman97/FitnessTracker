@@ -100,7 +100,7 @@ describe("API", () => {
         expect(duplicateSuccess).toBeFalsy();
         expect(duplicateErrResp.data).toBeTruthy();
       });
-      xit("Throws errors for password-too-short.", async () => {
+      it("Throws errors for password-too-short.", async () => {
         expect(tooShortSuccess).toBeFalsy();
         expect(tooShortResponse.data).toBeTruthy();
       });
@@ -121,7 +121,7 @@ describe("API", () => {
       });
     });
     describe("GET /users/me", () => {
-      xit("sends back users data if valid token is supplied in header", async () => {
+      it("sends back users data if valid token is supplied in header", async () => {
         const { data } = await axios.get(`${API_URL}/api/users/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });

@@ -4,23 +4,21 @@ const routine_activitiesRouter = express.Router();
 const { loginAuth } = require("./utils")
 
 routine_activitiesRouter.use((req, res, next) => {
-    console.log("A request is being made to /routines");
+    console.log("A request is being made to /routines_activities");
   
     next();
   });
-  routine_activitiesRouter.get("/",async (req, res, next) => {
-  
-  })
   routine_activitiesRouter.patch(()=>{
       "/:routineActivityId",
       loginAuth,
       async (req, res, next) => {
         const { count, duration } = req.body;
         const id = req.params.routine_activitiesId;
+        let creatorId = req.user.id
         try {
           const prevRoutine = await getRoutineActivityById(id);
           const nextRoutine = await getRoutineById(prevRoutine.routineId);
-          if (req.user.id != nextRoutine.creatorId) {
+          if (creatorId !== nextRoutine.creatorId) {
             res.status(500).send(err);
           } else {
             const routineActivity = await updateRoutineActivity({
@@ -42,7 +40,7 @@ routine_activitiesRouter.use((req, res, next) => {
         const id = req.params.routine_activitiesId;
         try {
           const prevRoutine = await getRoutineActivityById(id);
-          const nextRoutine = await getRoutineById(prevRoutine.activityId);
+          const nextRoutine = await getRoutineById(prevRoutine);
           if (req.user.id != nextRoutine.creatorId) {
             res.status(500).send(err);
           }

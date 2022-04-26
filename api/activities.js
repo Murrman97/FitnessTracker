@@ -38,17 +38,15 @@ activitiesRouter.post("/", async (req, res, next) => {
   }
 });
 
-activitiesRouter.patch("./:activityId", loginAuth, async (req, res, next) => {
-   const { name, description } = req.body;
-   console.log(name, description)
-  const id = req.params.activityId;
-  try {
-    const activity = await updateActivity({ id,name, description });
-    console.log(activity)
-    res.send(activity);
-  } catch (error) {
-    throw error;
-  }
+activitiesRouter.patch("/:activityId", loginAuth, async (req, res, next) => {
+const activityId = req.params
+const { name, description } = req.body
+try{
+const updateActivities = await updateActivity(activityId, name, description)
+res.send(updateActivities)
+}catch(error){
+  next(error)
+}
 });
 
 activitiesRouter.get("/:activityId/routines", async (req, res, next) => {

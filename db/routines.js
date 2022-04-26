@@ -23,16 +23,16 @@ async function createRoutine({ creatorId, isPublic, name, goal }) {
 
 async function getAllRoutines() {
   try {
-    const { rows: routines } = await client.query(`
+    const { rows } = await client.query(`
         SELECT routines.* , users.username AS "creatorName"
         FROM routines
         JOIN users 
         ON routines."creatorId" = users.id
       `);
-    const rA = await attachActivitiesToRoutines(routines);
-    const rA1 = rA[0].activities;
+    // const rA = await attachActivitiesToRoutines(routines);
+    // const rA1 = rA[0].activities;
     //   console.log(rA1,"Routines !!!!!")
-    return await attachActivitiesToRoutines(routines);
+    return await attachActivitiesToRoutines(rows);
   } catch (error) {
     throw error;
   }
@@ -156,18 +156,17 @@ async function updateRoutine({ id, ...fields }) {
 async function destroyRoutine(id) {
   await client.query(
     `
-  DELETE FROM routine_activities
-  WHERE routine_activities."routineId" = $1
-`,
-    [id]
-  );
-  await client.query(
-    `
     DELETE FROM routines
     WHERE id = $1
-  `,
-    [id]
-  );
+    `,
+    [id]);
+    await client.query(
+      `
+      DELETE FROM routine_activities
+      WHERE routine_activities."routineId" = $1
+    `,
+        [id]
+      );
 }
 
 module.exports = {

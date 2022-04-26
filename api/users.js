@@ -1,6 +1,6 @@
 const express = require("express");
 const usersRouter = express.Router();
-const { createUser, getUserByUsername, getUser, getPublicRoutinesByUser } = require("../db");
+const { createUser, getUserByUsername, getUser, getPublicRoutinesByUser, getUserById } = require("../db");
 const jwt = require("jsonwebtoken");
 const { loginAuth } = require("./utils");
 
@@ -97,7 +97,17 @@ usersRouter.post("/login", async (req, res, next) => {
   }
 });
 
-usersRouter.post("/me", loginAuth, async (req, res, next) => {
+usersRouter.get("/me", loginAuth, async (req, res, next) => {
+  if(!token){
+    next({
+      name: "MissingCredentialsError",
+      message: "Please login",
+    });
+  }
+  const user = getUser()
+  res.send(
+  user)
+
 })
 
 usersRouter.get("/:username/routines", async(req, res, next)=>{
