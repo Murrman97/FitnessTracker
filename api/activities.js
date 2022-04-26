@@ -56,9 +56,9 @@ activitiesRouter.get("/:activityId/routines", async (req, res, next) => {
 
   try {
     const activities = await getPublicRoutinesByActivity( activityId );
-    res.send({
+    res.send(
       activities
-    })
+    )
   } catch (error) {
     throw error;
   }
