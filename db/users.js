@@ -61,7 +61,6 @@ async function getUserByUsername(username) {
       [username]
       );
     
-    console.log({user})
     return user;
 }
 

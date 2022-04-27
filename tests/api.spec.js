@@ -100,7 +100,7 @@ describe("API", () => {
         expect(duplicateSuccess).toBeFalsy();
         expect(duplicateErrResp.data).toBeTruthy();
       });
-      xit("Throws errors for password-too-short.", async () => {
+      it("Throws errors for password-too-short.", async () => {
         expect(tooShortSuccess).toBeFalsy();
         expect(tooShortResponse.data).toBeTruthy();
       });
@@ -121,7 +121,7 @@ describe("API", () => {
       });
     });
     describe("GET /users/me", () => {
-      xit("sends back users data if valid token is supplied in header", async () => {
+      it("sends back users data if valid token is supplied in header", async () => {
         const { data } = await axios.get(`${API_URL}/api/users/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -139,7 +139,7 @@ describe("API", () => {
         expect(noTokenErrResp.data).toBeTruthy();
       });
     });
-    xdescribe("GET /users/:username/routines", () => {
+    describe("GET /users/:username/routines", () => {
       it("Gets a list of public routines for a particular user.", async () => {
         const userId = 2;
         const userWithRoutines = await getUserById(userId);
@@ -189,7 +189,7 @@ describe("API", () => {
         activityToCreateAndUpdate = respondedActivity;
       });
     });
-    xdescribe("PATCH /activities/:activityId (*)", () => {
+    describe("PATCH /activities/:activityId (*)", () => {
       it("Anyone can update an activity (yes, this could lead to long term problems a la wikipedia)", async () => {
         const newActivityData = {
           name: "Double Bicep Curls",
@@ -218,7 +218,7 @@ describe("API", () => {
       });
     });
   });
-  xdescribe("Routines", () => {
+  describe("Routines", () => {
     let routineToCreateAndUpdate = {
       isPublic: true,
       name: "Elliptical Day",
@@ -234,7 +234,7 @@ describe("API", () => {
       name: "Elliptical Day Private",
       goal: "Work on that Elliptical, yet again!",
     };
-    xdescribe("GET /routines", () => {
+    describe("GET /routines", () => {
       it("Returns a list of public routines, includes the activities with them", async () => {
         const publicRoutinesFromDB = await getAllPublicRoutines();
         const { data: publicRoutinesFromAPI } = await axios.get(
@@ -244,7 +244,7 @@ describe("API", () => {
       });
     });
 
-    xdescribe("POST /routines (*)", () => {
+    describe("POST /routines (*)", () => {
       it("Creates a new routine, with the creatorId matching the logged in user", async () => {
         const { data: respondedRoutine } = await axios.post(
           `${API_URL}/api/routines`,
@@ -272,7 +272,7 @@ describe("API", () => {
         expect(noLoggedInUserErrResp.data).toBeTruthy();
       });
     });
-    xdescribe("PATCH /routines/:routineId (**)", () => {
+    describe("PATCH /routines/:routineId (**)", () => {
       it("Updates a routine, notably changing public/private, the name, or the goal", async () => {
         const { data: respondedRoutine } = await axios.patch(
           `${API_URL}/api/routines/${routineToCreateAndUpdate.id}`,
@@ -284,7 +284,7 @@ describe("API", () => {
         routineToCreateAndUpdate = respondedRoutine;
       });
     });
-    xdescribe("DELETE /routines/:routineId (**)", () => {
+    describe("DELETE /routines/:routineId (**)", () => {
       it("Hard deletes a routine. Makes sure to delete all the routineActivities whose routine is the one being deleted.", async () => {
         const { data: deletedRoutine } = await axios.delete(
           `${API_URL}/api/routines/${routineToCreateAndUpdate.id}`,
@@ -297,7 +297,7 @@ describe("API", () => {
         expect(shouldBeDeleted).toBeFalsy();
       });
     });
-    xdescribe("POST /routines/:routineId/activities", () => {
+    describe("POST /routines/:routineId/activities", () => {
       let newRoutine;
       it("Attaches a single activity to a routine.", async () => {
         newRoutine = await createRoutine({
@@ -332,14 +332,14 @@ describe("API", () => {
       });
     });
   });
-  xdescribe("routine_activities", () => {
+  describe("routine_activities", () => {
     let newRoutineActivityData = {
       routineId: 3,
       activityId: 8,
       count: 25,
       duration: 200,
     };
-    xdescribe("PATCH /routine_activities/:routineActivityId (**)", () => {
+    describe("PATCH /routine_activities/:routineActivityId (**)", () => {
       it("Updates the count or duration on the routine activity", async () => {
         const { data: respondedRoutineActivity } = await axios.patch(
           `${API_URL}/api/routine_activities/${routineActivityToCreateAndUpdate.id}`,
@@ -369,7 +369,7 @@ describe("API", () => {
         expect(errRespondedRoutineActivity.data).toBeTruthy();
       });
     });
-    xdescribe("DELETE /routine_activities/:routineActivityId (**)", () => {
+    describe("DELETE /routine_activities/:routineActivityId (**)", () => {
       it("Removes an activity from a routine, uses hard delete", async () => {
         const { data: deletedRoutineActivity } = await axios.delete(
           `${API_URL}/api/routine_activities/${routineActivityToCreateAndUpdate.id}`,
